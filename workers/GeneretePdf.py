@@ -1,13 +1,13 @@
 from reportlab.lib.pagesizes import letter
-from database.MongoDB import MongoDB
+# from database.MongoDB import MongoDB
 from reportlab.pdfgen import canvas
 import pandas as pd
 
-mongodb = MongoDB("robot-book-price-report") 
+# mongodb = MongoDB("robot-book-price-report") 
 
 def generate_pdf_with_reportlab(expensive_books, available_books, summary):
     try:
-        output_path = r'C:\Users\vghaddad\Desktop\robot\docs\books_report.pdf'
+        output_path = r'C:\Users\vghaddad\Desktop\robot-book-price-report\docs\books_report.pdf'
         
         c = canvas.Canvas(output_path, pagesize=letter)
         width, height = letter
@@ -62,7 +62,7 @@ def generate_pdf_with_reportlab(expensive_books, available_books, summary):
         c.save()
         
     except Exception as e:
-        mongodb.create({'event': 'Erro ao realizar download', 'error': True})
+        # mongodb.create({'event': 'Erro ao realizar download', 'error': True})
         return {
             'error': True,
             'message': f'Message: {e}',
@@ -71,7 +71,7 @@ def generate_pdf_with_reportlab(expensive_books, available_books, summary):
         
     return {
         'error': False,
-        'message': 'PDF gerado com sucesso',
+        'message': None,
         'data': None,
     }
 
@@ -92,7 +92,7 @@ def manipulate_data(data):
         return expensive_books, df[df['Availability'] == "In stock"], summary
     
     except Exception as e:
-        mongodb.create({'event': 'Erro ao realizar download', 'error': True})
+        # mongodb.create({'event': 'Erro ao realizar download', 'error': True})
         return {
             'error': True,
             'message': f'Message: {e}',
@@ -100,6 +100,6 @@ def manipulate_data(data):
         }
 
 if __name__ == "__main__":
-  data = r'C:\Users\vghaddad\Desktop\robot\docs\books_data.csv'
+  data = r'C:\Users\vghaddad\Desktop\robot-book-price-report\docs\books_data.csv'
   expensive, available, summary = manipulate_data(data)
   generate_pdf_with_reportlab(expensive, available, summary)

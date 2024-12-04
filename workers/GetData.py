@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import pandas as pd
 import requests
-import os
  
 
 def scrape_books(base_url):
@@ -46,9 +45,8 @@ def scrape_books(base_url):
 
 if __name__ == "__main__":
   books_data = scrape_books("https://books.toscrape.com")
-  df = pd.DataFrame(books_data)
+  df = pd.DataFrame(books_data['data'])
 
-  BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-  output_file = r"C:\Users\vghaddad\Desktop\robot\docs\books_data.csv"
+  output_file = r"C:\Users\vghaddad\Desktop\robot-book-price-report\docs\books_data.csv"
   
   df.to_csv(output_file, index=False)
